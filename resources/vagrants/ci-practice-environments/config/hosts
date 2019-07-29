@@ -1,0 +1,7 @@
+172.16.1.100 ci.cilab
+172.16.1.101 nexus.cilab
+172.16.1.102 gitlab.cilab
+172.16.1.102 web.cilab
+
+
+ci.cilab[172.16.1.100]
