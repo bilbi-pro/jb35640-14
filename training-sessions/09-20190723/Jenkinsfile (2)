@@ -1,0 +1,40 @@
+#!/usr/bin/env groovy
+// guess what type i am, and what i'm doing...
+node {
+    properties([parameters([string(defaultValue: 'bilbi', description: '', name: 'ART_NAME', trim: true)])])
+    def mvnHome
+
+
+   stage('Preparation') {
+      git(  branch:'kinki',
+            url: 'https://github.com/DanMaxic/FINAL_X_1.git')
+
+      mvnHome =tool(name: 'mvn_3.6.0',
+                    type: 'maven')
+   }
+   
+   stage('Build') {
+      if (isUnix()) {
+         sh( label: 'here i\'m baking something...', 
+            script:"'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package")
+      } else {
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+      }
+   }
+   
+   stage('publish') {
+      nexusPublisher(nexusInstanceId: 'nexus',
+                     nexusRepositoryId: 'maven-releases',
+                     packages: [[
+                        $class: 'MavenPackage',
+                        mavenAssetList: [[
+                                classifier: '',
+                                extension: 'war',
+                                filePath: 'web/target/time-tracker-web-0.3.1.war'
+                        ]],
+                    mavenCoordinate: [artifactId: 'time-tracker',
+                     groupId: 'clinic.programming.time-tracker',
+                     packaging: 'pom',
+                     version: '0.3.1_${BUILD_NUMBER}']]])
+   }
+}
