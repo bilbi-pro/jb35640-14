@@ -70,7 +70,7 @@ docker exec -it <container-id/name> /bin/sh
 
 ### **Getting ui for view statistics**
 ```bash
-sudo docker run \
+docker run \
   --volume=/:/rootfs:ro \
   --volume=/var/run:/var/run:rw \
   --volume=/var/lib/docker/:/var/lib/docker:ro \
