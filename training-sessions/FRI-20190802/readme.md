@@ -91,7 +91,7 @@ Build the Code Infra (Code & Git Repo)
 >>    jenkins/jenkins:lts
 >
 >> docker run -d --restart=always --name="nexus" \
->>    -v /par12/nexus:/nexus-data \
+>>    -v /par12/nexus:/nexus-data/ \
 >>    -p 18081:8081 \
 >>    sonatype/nexus3
 >
@@ -101,5 +101,5 @@ Build the Code Infra (Code & Git Repo)
 >>    sonarqube
 >
 >> docker run -d --restart=always --name="jenkins_slave1" \
->    -v /par12/js1/:/home/jenkins/agent/ \
+>    -v /par12/js1/:/home/jenkins/ \
 >    jenkins/slave
